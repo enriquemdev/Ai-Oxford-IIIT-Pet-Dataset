@@ -1,0 +1,18 @@
+# Python and notebooks
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Generated training artifacts (large and reproducible)
+models/
+artifacts/
+entrega_oxford_pet.zip
+*.keras
+*.h5
+*.weights.h5
+
+# Local data and OS files
+data/
+.DS_Store
