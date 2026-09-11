@@ -1,0 +1,12 @@
+# Google Colab already includes most of these packages. This file is for local runs.
+tensorflow>=2.16,<2.21
+tensorflow-datasets>=4.9,<5
+# Protobuf 7 retira FieldDescriptor.label, todavía usado por TFDS 4.9.x.
+protobuf>=6.31,<7
+importlib-resources>=6; python_version >= "3.11"
+numpy>=1.26,<3
+pandas>=2.0,<3
+jinja2>=3.1,<4
+matplotlib>=3.8,<4
+seaborn>=0.13,<1
+scikit-learn>=1.4,<2
