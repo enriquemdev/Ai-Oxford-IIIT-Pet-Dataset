@@ -20,6 +20,22 @@ El archivo `Actividad_grupal_SCA.ipynb` es la entrega autocontenida. Está escri
 - diagnóstico de overfitting o underfitting a partir de las curvas;
 - conclusiones automáticas basadas en resultados reales.
 
+## Resultado de la ejecución final
+
+La corrida completa se ejecutó localmente sobre una GPU Apple M5 mediante TensorFlow Metal, usando 2,944 imágenes de entrenamiento, 368 de validación y 368 de test. El modelo se seleccionó antes de abrir test.
+
+| Resultado | Valor |
+|---|---:|
+| Modelo seleccionado | `mobilenet_finetuned` |
+| Validation accuracy | 88.04% |
+| Test accuracy | **86.14%** |
+| Macro precision | 86.43% |
+| Macro recall | 85.81% |
+| Macro F1 | 85.10% |
+| Brecha train-validation en la mejor época | 2.99 puntos |
+
+El objetivo de 85% se cumplió sin evidencia fuerte de overfitting o underfitting según el criterio documentado. El informe académico final de 10 páginas está en [`output/pdf/informe_tecnico_oxford_pet.pdf`](output/pdf/informe_tecnico_oxford_pet.pdf).
+
 ## Experimentos
 
 | ID | Modelo | Propósito |
@@ -47,13 +63,20 @@ No use las métricas de `FAST_MODE` en la entrega: ese modo solo comprueba que e
 ## Ejecución local
 
 ```bash
-python3 -m venv .venv
+/path/to/python3.12 -m venv .venv
 source .venv/bin/activate
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 jupyter lab Actividad_grupal_SCA.ipynb
 ```
 
-En Apple Silicon puede usarse el entorno de TensorFlow compatible con Metal. Para los entrenamientos finales, Colab con GPU ofrece una experiencia más consistente.
+En Apple Silicon, `requirements.txt` instala una combinación compatible de TensorFlow y `tensorflow-metal`. Verifique la aceleración antes de entrenar:
+
+```bash
+python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+```
+
+La salida debe incluir `PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')`. Para los entrenamientos finales, Colab con GPU sigue siendo una alternativa si se necesita una sesión más consistente o prolongada.
 
 ## Artefactos generados
 
@@ -64,7 +87,7 @@ models/       mejores checkpoints .keras
 artifacts/    historiales, métricas, tablas, figuras e informe de resultados
 ```
 
-El test se evalúa únicamente después de cerrar la selección con validación. Los resultados no están precargados ni inventados: aparecen al ejecutar el notebook sobre el dataset real.
+El test se evalúa únicamente después de cerrar la selección con validación. El notebook principal conserva las salidas de la corrida completa; los resultados provienen del dataset real y pueden regenerarse a partir de los checkpoints e historiales locales.
 
 ## Material suministrado
 
